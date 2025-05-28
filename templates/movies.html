@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags, web page title, and links to external CSS and JavaScript files -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ghibli Fans - Movies</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body>
+    <header>
+        <!-- Header image (Studio Ghibli logo) -->
+        <div class="header-img" style="text-align: center; margin-bottom: 20px;">
+            <a class="navbar-brand" href="/">
+                <img style="max-width:640px; margin-top: 1px;" src="{{ url_for('static', filename='img/Studio-Ghibli-Logo.jpg') }}" alt="Studio Ghibli Logo">
+            </a>
+        </div>
+    </header>
+
+    <nav>
+        <!-- Logout button -->
+        <div class="navbar-links" style="text-align: center; margin-bottom: 10px;">
+            <a href="{{ url_for('logout') }}" class="btn btn-primary" style="display: inline-block; padding: 10px 20px; color: white; text-decoration: none; background-color: #007bff; border-radius: 5px;">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="content-container">
+            <h2>Welcome {{ session['member_name'] }} to the Ghibli fans forum website</h2>
+
+            <h2>Ghibli Fans Movies</h2>
+            <p>Click the movie thumbnail from those displayed below to view all comments and to add, modify or delete your own comments.</p>
+
+            <table border="1">
+                <tr>
+                    <th>Link</th>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Director</th>
+                    <th>Length (mins)</th>
+                    <th>Rating</th>
+                    <th>MovieID</th>
+                </tr>
+                {% for movie in data %}
+    <tr>
+        <td>
+            <a href="{{ url_for('discussion', movieNbr=movie['movieID']) }}">
+                <img style="max-width:130px; margin-top: 1px;" src="{{ url_for('static', filename='movie_img/' ~ movie['movieID'] ~ '.jpg') }}" alt="{{ movie['title'] }}">
+            </a>
+        </td>
+        <td>
+            <a href="https://www.google.com.au/search?q={{ movie['title'] }}" target="_blank">{{ movie['title'] }}</a>
+        </td>
+        <td>{{ movie['releaseYear'] }}</td>
+        <td>{{ movie['director'] }}</td>
+        <td>{{ movie['length'] }}</td>
+        <td>{{ movie['rating'] }}</td>
+        <td>{{ movie['movieID'] }}</td>
+    </tr>
+{% endfor %}
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Footer content -->
+        <div class="blockquote-footer" style="text-align: center; margin-top: 40px;">
+            <p>&copy; 2025 Ghibli Fans. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

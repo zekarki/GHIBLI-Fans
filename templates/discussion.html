@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ghibli Fans - Discussion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <style>
+        .btn-wide {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-img text-center">
+            <a class="navbar-brand" href="/">
+                <img style="max-width:640px; margin-top: 1px;" src="{{ url_for('static', filename='img/Studio-Ghibli-Logo.jpg') }}">
+            </a>
+        </div>
+    </header>
+
+    <nav class="text-center my-3">
+        <a href="{{ url_for('movies') }}" class="btn btn-primary mx-2">Movies</a>
+        <a href="{{ url_for('logout')}}" class="btn btn-primary mx-2">Logout</a>
+    </nav>
+
+    <main class="container">
+        <h2 class="text-center">Ghibli Fans - Discussion for '{{ movieTitle }}'</h2>
+
+        <div class="text-center my-4">
+            <img src="{{ url_for('static', filename='movie_img/' ~ movieID ~ '.jpg') }}" style="max-width:180px;">
+        </div>
+
+        <form action="{{ url_for('add_new_comment') }}" method="post" class="mb-4">
+            <input type="hidden" name="movieID" value="{{ movieID }}">
+            <textarea name="comment_text" class="form-control mb-2" placeholder="Add a new comment for '{{ movieTitle }}'"></textarea>
+            <button type="submit" class="btn btn-info">Add New Comment</button>
+        </form>
+
+        <hr>
+        <p><strong>Total comments loaded:</strong> {{ comments | length }}</p>
+
+        {% for comment in comments %}
+            <div class="mb-4">
+                <p>{{ comment['comments'] }}</p>
+                <p><strong>User:</strong> {{ comment['usrid'] }}<br><strong>Date:</strong> {{ comment['commentDate'] }}</p>
+
+                {% if comment['memberID'] == memberID %}
+                    <form action="{{ url_for('update_comment') }}" method="post" class="mb-2" onsubmit="return validateUpdateComment(this)">
+                        <input type="hidden" name="movieID" value="{{ movieID }}">
+                        <input type="hidden" name="commentID" value="{{ comment['discussionID'] }}">
+                        <textarea name="updated_comment" class="form-control mb-2">{{ comment['comments'] }}</textarea>
+                        <button type="submit" class="btn btn-success btn-wide">Update Comment</button>
+                    </form>
+
+                    <form action="{{ url_for('delete_comment') }}" method="post">
+                        <input type="hidden" name="movieID" value="{{ movieID }}">
+                        <input type="hidden" name="commentID" value="{{ comment['discussionID'] }}">
+                        <button type="submit" class="btn btn-danger btn-wide">Delete Comment</button>
+                    </form>
+                {% endif %}
+            </div>
+            <hr>
+        {% endfor %}
+
+        <script>
+            function validateUpdateComment(form) {
+                const textarea = form.querySelector("textarea[name='updated_comment']");
+                if (!textarea.value.trim()) {
+                    alert("Updated comment cannot be blank.");
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </main>
+
+    <footer class="text-center mt-4">
+        <div class="blockquote-footer">
+            <p>&copy; 2025 Ghibli Fans. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

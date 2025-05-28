@@ -1,0 +1,81 @@
+
+Using Flask to create a web application
+Use the following HTML ‘shell’ layout for each of the 4 template HTML file
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags, web page title, and links to external CSS and JavaScript files -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ghibli Fans - Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body>
+    <header>
+        <!-- Header image (Studio Ghibli logo) -->
+        <div class="header-img" style="text-align: center;">
+            <a class="navbar-brand" href="/">
+                <img style="max-width: 640px; margin-top: 1px;" src="{{ url_for('static', filename='img/Studio-Ghibli-Logo.jpg') }}">
+            </a>
+        </div>
+    </header>
+
+    <nav>
+        <!-- Navigation button to the login page -->
+        <div class="navbar-links" style="text-align: center;">
+            <a href="{{ url_for('login') }}">
+                <button type="button" class="login-button">Login</button>
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="form-container">
+            <div class="form-header">Ghibli Fans - Register</div>
+            <div class="form-body">
+                <p>Enter your details to sign up and register for Ghibli Fans</p>
+                <form action="{{ url_for('register') }}" method="post" autocomplete="off">
+                    <div class="input-group">
+                        <div class="input-icon"><i class="fas fa-user"></i></div>
+                        <input type="text" name="fullname" placeholder="Full name" id="full name" class="input-field" required>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-icon"><i class="fas fa-user-circle"></i></div>
+                        <input type="text" name="username" placeholder="Username" id="username" class="input-field" required>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-icon"><i class="fas fa-lock"></i></div>
+                        <input type="password" name="password" placeholder="Password" id="password" class="input-field" required>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-icon"><i class="fas fa-envelope"></i></div>
+                        <input type="email" name="email" placeholder="Email" id="email" class="input-field" required>
+                    </div>
+
+                    <button type="submit" class="submit-button">Register</button>
+                </form>
+
+                <!-- Message display -->
+                <div class="msg">
+                    <h4>{{ msg }}</h4>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Footer content -->
+        <div class="blockquote-footer" style="text-align: center; margin-top: 20px;">
+            <p>&copy; 2025 Ghibli Fans. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
