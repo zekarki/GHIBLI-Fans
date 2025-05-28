@@ -1,3 +1,11 @@
+'''
+Project: Ghibli Movie Discussion Forum
+Purpose: A web application for users to discuss Ghibli movies.
+Author: Jeetendra Karki
+Date: 2025-05-29
+Version: 1.0
+This code is a Flask application that allows users to log in, register, and discuss Ghibli movies.
+'''
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
