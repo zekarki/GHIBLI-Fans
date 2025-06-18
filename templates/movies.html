@@ -36,6 +36,15 @@
             <h2>Ghibli Fans Movies</h2>
             <p>Click the movie thumbnail from those displayed below to view all comments and to add, modify or delete your own comments.</p>
 
+            <!-- Add New Movie Button -->
+            <div style="text-align: right; margin-bottom: 10px;">
+                <a href="{{ url_for('add_movie') }}"
+                   style="display: inline-block; padding: 10px 16px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">
+                   ➕ Add New Movie
+                </a>
+            </div>
+
+            <!-- Movie Table -->
             <table border="1">
                 <tr>
                     <th>Link</th>
@@ -47,22 +56,22 @@
                     <th>MovieID</th>
                 </tr>
                 {% for movie in data %}
-    <tr>
-        <td>
-            <a href="{{ url_for('discussion', movieNbr=movie['movieID']) }}">
-                <img style="max-width:130px; margin-top: 1px;" src="{{ url_for('static', filename='movie_img/' ~ movie['movieID'] ~ '.jpg') }}" alt="{{ movie['title'] }}">
-            </a>
-        </td>
-        <td>
-            <a href="https://www.google.com.au/search?q={{ movie['title'] }}" target="_blank">{{ movie['title'] }}</a>
-        </td>
-        <td>{{ movie['releaseYear'] }}</td>
-        <td>{{ movie['director'] }}</td>
-        <td>{{ movie['length'] }}</td>
-        <td>{{ movie['rating'] }}</td>
-        <td>{{ movie['movieID'] }}</td>
-    </tr>
-{% endfor %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('discussion', movieNbr=movie['movieID']) }}">
+                            <img style="max-width:130px; margin-top: 1px;" src="{{ url_for('static', filename='movie_img/' ~ movie['movieID'] ~ '.jpg') }}" alt="{{ movie['title'] }}">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="https://www.google.com.au/search?q={{ movie['title'] }}" target="_blank">{{ movie['title'] }}</a>
+                    </td>
+                    <td>{{ movie['releaseYear'] }}</td>
+                    <td>{{ movie['director'] }}</td>
+                    <td>{{ movie['length'] }}</td>
+                    <td>{{ movie['rating'] }}</td>
+                    <td>{{ movie['movieID'] }}</td>
+                </tr>
+                {% endfor %}
             </table>
         </div>
     </main>

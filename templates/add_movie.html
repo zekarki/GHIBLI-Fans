@@ -1,0 +1,52 @@
+<!-- templates/add_movie.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Movie</title>
+</head>
+<body>
+    <h2>Add a New Ghibli Movie</h2>
+
+    <!-- Movie form: submitted via POST -->
+    <form method="POST">
+        <!-- Movie Title -->
+        <label>Title:</label><br>
+        <input type="text" name="title" required><br><br>
+
+        <!-- Release Year -->
+        <label>Release Year:</label><br>
+        <input type="number" name="release_year" required><br><br>
+
+        <!-- Director Name -->
+        <label>Director:</label><br>
+        <input type="text" name="director" required><br><br>
+
+        <!-- Movie Length in Minutes -->
+        <label>Length (in minutes):</label><br>
+        <input type="number" name="length" required><br><br>
+
+        <!-- Rating: Decimal between 0.0 and 10.0 -->
+        <label>Rating ():</label><br>
+        <select id="Rating" name="rating" required>
+            <option value="">Select Rating</option>
+            <option value="G">G</option>
+            <option value="PG">PG</option>
+            <option value="PG 13+">P 13+</option>
+            <option value="NR">NR</option>
+        </select><br><br>
+
+        <!-- Submit Button -->
+        <button type="submit">Add Movie</button>
+    </form>
+
+    <!-- Display a success or error message if it exists -->
+    {% if msg %}
+        <p style="color:green;">{{ msg }}</p>
+    {% endif %}
+
+    <br>
+
+    <!-- Link back to movie list -->
+    <a href="{{ url_for('movies') }}">Back to Movie List</a>
+</body>
+</html>

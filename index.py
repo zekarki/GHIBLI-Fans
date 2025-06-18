@@ -203,6 +203,54 @@ def delete_comment():
         return redirect(url_for('discussion', movieNbr=movieID))
     return redirect(url_for('login'))
 
+
+#-----------------------------------------------------------
+# Add new movie (Exclusively for special Jeet)
+#-----------------------------------------------------------
+@app.route('/add_movie', methods=['GET', 'POST'])
+def add_movie():
+    # Check if the user is logged in
+    if 'loggedin' not in session:
+        return redirect(url_for('login'))
+
+    msg = ''  # Message to show success or error
+
+    if request.method == 'POST':
+        # Get form data from the user
+        title = request.form.get('title')
+        release_year = request.form.get('release_year')
+        director = request.form.get('director')
+        length = request.form.get('length')
+        rating = request.form.get('rating')
+
+        # Basic validation to ensure no field is empty
+        if not title or not release_year or not director or not length or not rating:
+            msg = 'All fields are required.'
+        else:
+            try:
+                # Insert the new movie into the database
+                with db.engine.connect() as conn:
+                    conn.execute(text("""
+                        INSERT INTO movie (title, releaseYear, director, length, rating)
+                        VALUES (:title, :release_year, :director, :length, :rating)
+                    """), {
+                        "title": title,
+                        "release_year": release_year,
+                        "director": director,
+                        "length": length,
+                        "rating": rating
+                    })
+                    conn.commit()  # Commit the transaction
+                    msg = 'Movie added successfully!'
+            except Exception as e:
+                # Show error message if database operation fails
+                msg = f"Error: {type(e).__name__}: {e}"
+
+    # Render the form page with a message
+    return render_template('add_movie.html', msg=msg)
+
+
+
 # ----------------------------------------------------------
 # Start the Flask server
 # ----------------------------------------------------------
